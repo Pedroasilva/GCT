@@ -6,6 +6,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { useColorMode } from '@vueuse/core'
 
 defineProps({
     canResetPassword: {
@@ -27,6 +28,8 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+
+const mode = useColorMode()
 </script>
 
 <template>

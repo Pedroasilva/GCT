@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -10,7 +10,7 @@ import {
     navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 
-import { useColorMode } from '@vueuse/core'
+import { useColorMode } from '@vueuse/core';
 
 const showingNavigationDropdown = ref(false);
 
@@ -30,7 +30,8 @@ const handleLogout = async () => {
     }
 };
 
-const mode = useColorMode()
+const mode = useColorMode();
+mode.value = 'dark';
 
 </script>
 

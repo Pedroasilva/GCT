@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Link } from '@inertiajs/vue3';
 import {
     NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+    navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 
 import { useColorMode } from '@vueuse/core'
@@ -55,15 +54,28 @@ const mode = useColorMode()
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>Vendas</NavigationMenuTrigger>
                     <NavigationMenuContent>
-                        <ul class="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[minmax(0,.75fr)_minmax(0,1fr)]">
+                        <ul class="flex w-[400px] gap-3 p-4 md:w-[500px] lg:w-[600px]">
                             <li>
                                 <NavigationMenuLink as-child>
                                     <a href="/docs/introduction"
                                         class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                                        <div class="text-sm font-medium leading-none">Introduction</div>
-                                        <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                            Re-usable components built using Radix UI and Tailwind CSS.
-                                        </p>
+                                        <div class="text-sm font-medium leading-none">Nova venda</div>
+                                    </a>
+                                </NavigationMenuLink>
+                            </li>
+                            <li>
+                                <NavigationMenuLink as-child>
+                                    <a href="/docs/ongoing-sales"
+                                        class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                                        <div class="text-sm font-medium leading-none">Vendas em andamento</div>
+                                    </a>
+                                </NavigationMenuLink>
+                            </li>
+                            <li>
+                                <NavigationMenuLink as-child>
+                                    <a href="/docs/completed-sales"
+                                        class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                                        <div class="text-sm font-medium leading-none">Vendas finalizadas</div>
                                     </a>
                                 </NavigationMenuLink>
                             </li>
@@ -74,7 +86,8 @@ const mode = useColorMode()
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>Clientes</NavigationMenuTrigger>
                     <NavigationMenuContent>
-                        <ul class="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[minmax(0,.75fr)_minmax(0,1fr)]">
+                        <ul
+                            class="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[minmax(0,.75fr)_minmax(0,1fr)]">
                             <li>
                                 <NavigationMenuLink as-child>
                                     <a href="/docs/introduction"

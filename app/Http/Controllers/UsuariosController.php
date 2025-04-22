@@ -21,10 +21,20 @@ class UsuariosController extends Controller
         ]);
     }
 
-    public function list(Request $request): Response
+    public function list(): Response
     {
+        $users = User::with('roles')->get()->map(function ($user) {
+            return [
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->getRoleNames()->first(),
+            ];
+        });
+
         return Inertia::render('Users/List', [
             'status' => session('status'),
+            'users' => $users
         ]);
     }
 

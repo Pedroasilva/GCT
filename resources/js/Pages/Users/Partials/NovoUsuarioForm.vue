@@ -10,7 +10,36 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    user: {
+        type: Object,
+        default: () => ({
+            name: '',
+            email: '',
+            role: '',
+        }),
+    },
+    user_id: {
+        type: String,
+        default: '',
+    },
 });
+
+if (props.user_id) {
+    props.user.id = props.user_id;
+
+    fetch(`/users/show/${props.user.id}`)
+        .then((response) => response.json())
+        .then((data) => {
+            form.name = data.name;
+            form.email = data.email;
+            form.role = data.role;
+            form.id = data.id;
+        })
+        .catch((error) => {
+            console.error('Error fetching user data:', error);
+        });
+
+}
 
 const generateRandomPassword = () => {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -22,37 +51,50 @@ const generateRandomPassword = () => {
 };
 
 const form = useForm({
-    name: '',
-    email: '',
+    name: props.user.name || '',
+    email: props.user.email || '',
     password: generateRandomPassword(),
-    role: '',
+    role: props.user.role || '',
+    id: props.user.id || '',
 });
 
-const createUser = () => {
-    form.post(route('users.store'), {
-        preserveScroll: true,
-        onSuccess: () => {
-            form.reset();
-            form.password = generateRandomPassword();
-        }
+const saveUser = () => {
+    if (props.user.id) {
+        form.put(route('users.update', props.user.id), {
+            preserveScroll: true,
+            onSuccess: () => {
+                form.reset();
+                localStorage.removeItem('user_id');
+            },
+        });
+    } else {
+        form.post(route('users.store'), {
+            preserveScroll: true,
+            onSuccess: () => {
+                form.reset();
+                form.password = generateRandomPassword();
+            },
+        });
     }
-    );
 };
 </script>
 
 <template>
     <section>
         <header>
+
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                Cadastro de Usuário
+                {{ props.user.id ? 'Editar Usuário' : 'Cadastro de Usuário' }}
             </h2>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Preencha as informações para cadastrar um novo usuário.
+                {{ props.user.id
+                    ? 'Atualize as informações do usuário.'
+                    : 'Preencha as informações para cadastrar um novo usuário.' }}
             </p>
         </header>
 
-        <form @submit.prevent="createUser" class="mt-6 space-y-6">
+        <form @submit.prevent="saveUser" class="mt-6 space-y-6">
             <div>
                 <InputLabel for="name" value="Nome" />
 
@@ -95,12 +137,14 @@ const createUser = () => {
             </div>
 
             <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Cadastrar</PrimaryButton>
+                <PrimaryButton :disabled="form.processing">
+                    {{ props.user.id ? 'Salvar Alterações' : 'Cadastrar' }}
+                </PrimaryButton>
 
                 <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
                     leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
                     <p v-if="form.recentlySuccessful" class="text-sm text-gray-600 dark:text-gray-400">
-                        Usuário cadastrado com sucesso.
+                        {{ props.user.id ? 'Usuário atualizado com sucesso.' : 'Usuário cadastrado com sucesso.' }}
                     </p>
                 </Transition>
             </div>

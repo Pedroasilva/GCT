@@ -43,9 +43,14 @@ Route::middleware('auth')->group(function () {
         ->middleware(CheckPermission::class . ':usuarios_gerenciar')
         ->controller(UsuariosController::class)
         ->group(function () {
+            Route::get('/show/{user}', 'show')->name('show');
             Route::get('/new', 'new')->name('new');
+            Route::get('/edit', 'new')->name('edit');
             Route::post('/store', 'store')->name('store');
             Route::get('/list', 'list')->name('list');
+            Route::put('/update/{user}', 'update')->name('update');
+            Route::delete('/destroy/{user}', 'destroy')->name('destroy');
+            Route::put('/activate/{user}', 'activate')->name('activate');
         });
 
     // Email Verification and Password Routes

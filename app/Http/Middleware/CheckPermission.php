@@ -16,7 +16,6 @@ class CheckPermission
      */
     public function handle(Request $request, Closure $next, string $permission)
     {
-        dump($permission);
         if (!$request->user() || !$request->user()->can($permission)) {
             return Inertia::render('Errors/403');
         }

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Spatie\Permission\Models\Permission;
 use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
@@ -34,6 +35,11 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'role' => $request->user()?->getRoleNames()->first(),
+                'can' => $request->user()?->getPermissionsViaRoles()
+                    ->mapWithKeys(function (Permission $permission) {
+                        return [$permission['name'] => auth()->user()->can($permission['name'])];
+                    })
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),

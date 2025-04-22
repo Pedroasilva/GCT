@@ -14,9 +14,9 @@ return new class extends Migration
     public function up(): void
     {
         // Criação das permissões
-        $permissions = ['ver agenda', 'editar perfil', 'trocar senha'];
-        $vendedorPermissions = ['gerenciar vendas', 'nova venda', 'vendas em andamento', 'vendas finalizadas'];
-        $adminPermissions = ['gerenciar usuarios'];
+        $permissions = ['agenda_ver', 'perfil_editar', 'senha_trocar'];
+        $vendedorPermissions = ['vendas_gerenciar', 'venda_nova', 'vendas_andamento', 'vendas_finalizadas'];
+        $adminPermissions = ['usuarios_gerenciar'];
 
         // Criar todas as permissões
         foreach (array_merge($permissions, $vendedorPermissions, $adminPermissions) as $permission) {

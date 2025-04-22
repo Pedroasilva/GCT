@@ -13,8 +13,6 @@ import { useColorMode } from '@vueuse/core';
 import { usePage } from '@inertiajs/vue3';
 import { provide } from 'vue';
 
-import { PageProps } from '@/types/index';
-
 const handleLogout = async () => {
     try {
         await fetch('/logout', {
@@ -34,7 +32,7 @@ const handleLogout = async () => {
 const mode = useColorMode();
 mode.value = 'dark';
 
-const page = usePage<PageProps>();
+const page = usePage();
 const user = page.props.auth;
 
 provide('user', user);
@@ -102,7 +100,7 @@ provide('user', user);
                         <ul class="flex w-[400px] gap-3 p-4 md:w-[500px] lg:w-[600px]">
                             <li>
                                 <NavigationMenuLink as-child>
-                                    <a href="/docs/introduction"
+                                    <a :href="route('usuarios.new')"
                                         class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                                         <div class="text-sm font-medium leading-none">Novo usuário</div>
                                     </a>
@@ -110,7 +108,7 @@ provide('user', user);
                             </li>
                             <li>
                                 <NavigationMenuLink as-child>
-                                    <a href="/docs/ongoing-sales"
+                                    <a :href="route('usuarios.list')"
                                         class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                                         <div class="text-sm font-medium leading-none">Usuários</div>
                                     </a>

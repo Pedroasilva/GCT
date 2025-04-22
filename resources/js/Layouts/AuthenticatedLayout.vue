@@ -50,7 +50,7 @@ provide('user', user);
                     </NavigationMenuLink>
                 </NavigationMenuItem>
 
-                <NavigationMenuItem v-if="user.can.agenda_ver">
+                <NavigationMenuItem v-if="user.can.agenda_gerenciar">
                     <NavigationMenuLink :href="route('profile.edit')" :class="navigationMenuTriggerStyle()">
                         Agenda
                     </NavigationMenuLink>
@@ -67,7 +67,7 @@ provide('user', user);
                     <NavigationMenuContent>
                         <ul class="flex w-[400px] gap-3 p-4 md:w-[500px] lg:w-[600px]">
                             <li>
-                                <NavigationMenuLink as-child v-if="user.can.venda_nova">
+                                <NavigationMenuLink as-child>
                                     <a href="/docs/introduction"
                                         class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                                         <div class="text-sm font-medium leading-none">Nova venda</div>
@@ -75,7 +75,7 @@ provide('user', user);
                                 </NavigationMenuLink>
                             </li>
                             <li>
-                                <NavigationMenuLink as-child v-if="user.can.vendas_andamento">
+                                <NavigationMenuLink as-child>
                                     <a href="/docs/ongoing-sales"
                                         class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                                         <div class="text-sm font-medium leading-none">Vendas em andamento</div>
@@ -83,7 +83,7 @@ provide('user', user);
                                 </NavigationMenuLink>
                             </li>
                             <li>
-                                <NavigationMenuLink as-child v-if="user.can.vendas_finalizadas">
+                                <NavigationMenuLink as-child>
                                     <a href="/docs/completed-sales"
                                         class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                                         <div class="text-sm font-medium leading-none">Vendas finalizadas</div>
@@ -100,7 +100,7 @@ provide('user', user);
                         <ul class="flex w-[400px] gap-3 p-4 md:w-[500px] lg:w-[600px]">
                             <li>
                                 <NavigationMenuLink as-child>
-                                    <a :href="route('usuarios.new')"
+                                    <a :href="route('users.new')"
                                         class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                                         <div class="text-sm font-medium leading-none">Novo usuário</div>
                                     </a>
@@ -108,7 +108,7 @@ provide('user', user);
                             </li>
                             <li>
                                 <NavigationMenuLink as-child>
-                                    <a :href="route('usuarios.list')"
+                                    <a :href="route('users.list')"
                                         class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                                         <div class="text-sm font-medium leading-none">Usuários</div>
                                     </a>
@@ -118,7 +118,7 @@ provide('user', user);
                     </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                <NavigationMenuItem v-if="user.can.perfil_editar">
+                <NavigationMenuItem v-if="user.can.perfil_gerenciar">
                     <NavigationMenuLink :href="route('profile.edit')" :class="navigationMenuTriggerStyle()">
                         Seu Perfil
                     </NavigationMenuLink>

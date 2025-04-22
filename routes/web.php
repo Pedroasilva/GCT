@@ -2,35 +2,61 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsuariosController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Middleware\CheckPermission;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 // Public Routes
-Route::get('/', function () {
-    return redirect()->route('login');
+Route::redirect('/', '/login');
+
+// Guest Routes
+Route::middleware('guest')->group(function () {
+    Route::controller(AuthenticatedSessionController::class)->group(function () {
+        Route::get('login', 'create')->name('login');
+        Route::post('login', 'store');
+    });
 });
 
 // Authenticated Routes
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+Route::middleware('auth')->group(function () {
+
+    // Dashboard
+    Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
 
     // Profile Routes
-    Route::prefix('profile')->name('profile.')->group(function () {
-        Route::get('/', [ProfileController::class, 'edit'])->name('edit');
-        Route::patch('/', [ProfileController::class, 'update'])->name('update');
-        Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
-    });
+    Route::prefix('profile')
+        ->name('profile.')
+        ->middleware(CheckPermission::class . ':perfil_gerenciar')
+        ->controller(ProfileController::class)
+        ->group(function () {
+            Route::get('/', 'edit')->name('edit');
+            Route::patch('/', 'update')->name('update');
+            Route::delete('/', 'destroy')->name('destroy');
+        });
 
     // Usuarios Routes
-    Route::prefix('usuarios')->name('usuarios.')->group(function () {
-        Route::get('/new', [UsuariosController::class, 'new'])->name('new');
-        Route::post('/store', [UsuariosController::class, 'store'])->name('store');
-        Route::get('/list', [UsuariosController::class, 'list'])->name('list');
-    });
-});
+    Route::prefix('users')
+        ->name('users.')
+        ->middleware(CheckPermission::class . ':usuarios_gerenciar')
+        ->controller(UsuariosController::class)
+        ->group(function () {
+            Route::get('/new', 'new')->name('new');
+            Route::post('/store', 'store')->name('store');
+            Route::get('/list', 'list')->name('list');
+        });
 
-// Authentication Routes
-require __DIR__.'/auth.php';
+    // Email Verification and Password Routes
+    Route::middleware(CheckPermission::class . ':perfil_gerenciar')->group(function () {
+        Route::controller(ConfirmablePasswordController::class)->group(function () {
+            Route::get('confirm-password', 'show')->name('password.confirm');
+            Route::post('confirm-password', 'store');
+        });
+        Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+    });
+
+    // Logout
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+});

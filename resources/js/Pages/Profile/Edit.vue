@@ -6,9 +6,6 @@ import { Head } from '@inertiajs/vue3';
 import RoleForm from './Partials/RoleForm.vue';
 
 defineProps({
-    mustVerifyEmail: {
-        type: Boolean,
-    },
     status: {
         type: String,
     },
@@ -40,7 +37,6 @@ defineProps({
                     class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800"
                 >
                     <UpdateProfileInformationForm
-                        :must-verify-email="mustVerifyEmail"
                         :status="status"
                         class="max-w-xl"
                     />

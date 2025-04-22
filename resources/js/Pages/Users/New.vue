@@ -2,6 +2,12 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import NovoUsuarioForm from './Partials/NovoUsuarioForm.vue';
+
+defineProps({
+    roles: {
+        type: Array,
+    },
+});
 </script>
 
 <template>
@@ -14,6 +20,7 @@ import NovoUsuarioForm from './Partials/NovoUsuarioForm.vue';
                 <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
                     <NovoUsuarioForm
                         :status="status"
+                        :roles="roles"
                     />
                 </div>
             </div>

@@ -1,8 +1,6 @@
-<script setup>
-import { usePage } from '@inertiajs/vue3';
-
-const page = usePage();
-const user = page.props.auth;
+<script setup lang="ts">
+import { inject } from 'vue';
+const user = inject('user');
 </script>
 
 <template>
@@ -13,7 +11,9 @@ const user = page.props.auth;
             </h2>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                <span class="text-green-500 font-bold">{{ user.role.charAt(0).toUpperCase() + user.role.slice(1) }}</span>
+                <span class="text-green-500 font-bold">
+                    {{ user.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'N/A' }}
+                </span>
             </p>
         </header>
     </section>

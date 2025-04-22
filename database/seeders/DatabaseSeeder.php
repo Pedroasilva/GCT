@@ -16,17 +16,17 @@ class DatabaseSeeder extends Seeder
 
         // Criação do usuário administrador
         $adminUser = User::factory()->create([
-            'name' => 'Pedro Augusto',
-            'email' => 'pedrocaaugusto@gmail.com',
-            'password' => bcrypt('15935700'),
+            'name' => 'Administrador',
+            'email' => 'admin@gct.com.br',
+            'password' => bcrypt('123456789'),
         ]);
         $adminUser->assignRole($adminRole);
 
         // Criação do usuário vendedor
         $sellerUser = User::factory()->create([
-            'name' => 'João Silva',
-            'email' => 'joao.silva@gmail.com',
-            'password' => bcrypt('12345678'),
+            'name' => 'vendedor',
+            'email' => 'vendedor@gct.com.br',
+            'password' => bcrypt('123456789'),
         ]);
         $sellerUser->assignRole($sellerRole);
     }

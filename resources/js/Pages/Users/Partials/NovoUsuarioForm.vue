@@ -80,12 +80,12 @@ const createUser = () => {
             </div>
 
             <div>
-                <InputLabel for="role" value="Role" />
+                <InputLabel for="role" value="Perfil" />
 
                 <select id="role" v-model="form.role"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-500"
                     required>
-                    <option value="" disabled>Selecione uma role</option>
+                    <option value="" disabled>Selecione um perfil</option>
                     <option v-for="role in roles" :key="role" :value="role">
                         {{ role }}
                     </option>

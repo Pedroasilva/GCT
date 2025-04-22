@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -13,6 +12,8 @@ import {
 import { useColorMode } from '@vueuse/core';
 import { usePage } from '@inertiajs/vue3';
 import { provide } from 'vue';
+
+import { PageProps } from '@/types/index';
 
 const handleLogout = async () => {
     try {
@@ -33,7 +34,7 @@ const handleLogout = async () => {
 const mode = useColorMode();
 mode.value = 'dark';
 
-const page = usePage();
+const page = usePage<PageProps>();
 const user = page.props.auth;
 
 provide('user', user);
